@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata: 
+      labels: 
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: fabricioveronez/web-page:blue
+          ports:
+            - containerPort: 80
+---
+
+apiVersion: v1
+kind: service
+metadata:
+  name: web-service
+spec:
+  selector:
+    app: web
+  ports:
+    - protocol: TCP
+      port: 80
+  type: NodePort
